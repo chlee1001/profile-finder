@@ -1,0 +1,12 @@
+extends layouts/main
+
+block content
+    .form-container
+        form(action=`/resumes${routes.uploadResume}`, method="post" enctype="multipart/form-data")
+            input(type="text", placeholder="제목", name="title", required=true)
+            label(for="avatar") 프로필 사진
+            input(type="file", id="profileImg1", name="profileImg1", accept="image/*")
+            input(type="file", id="profileImg2", name="profileImg2", accept="image/*")
+            input(type="file", id="profileImg3", name="profileImg3", accept="image/*")
+            textarea(name="description", placeholder="설명", required=true)
+            input(type="submit", value="작성 완료")

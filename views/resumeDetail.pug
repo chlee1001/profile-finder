@@ -1,0 +1,14 @@
+extends layouts/main
+
+block content
+    .resume__info
+        a(href=routes.editresume(resume.id)) 수정
+        img.resume__image(src=resume.image1)
+        img.resume__image(src=resume.image2)
+        img.resume__image(src=resume.image3)
+        h5.resume__title=resume.title
+        span.resume__keywords=resume.keywords
+        p.resume__creator=resume.creator 
+        p.resume__description=resume.description 
+        a(href=routes.deleteResume(resume.id)) 삭제하기
+        button(onclick="history.back()") 뒤로가기

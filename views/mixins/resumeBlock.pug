@@ -1,0 +1,8 @@
+mixin resumeBlock(resume = {})
+    .resumeBlock
+        a(href=routes.resumeDetail(resume.id))
+            h4.resumeBlock__image=resume.image
+            h4.resumeBlock__title=resume.title
+        a(href=routes.userDetail(resume.creator.id))
+            h6.resumeBlock__creator=resume.creator.name
+                

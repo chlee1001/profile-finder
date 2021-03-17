@@ -1,0 +1,11 @@
+extends layouts/main
+
+block content
+    .list
+        each item in resumes
+        +resumeBlock({
+            id:item.id,
+            title:item.title,
+            image:item.imgUrl1,
+            creator:item.creator,
+        })

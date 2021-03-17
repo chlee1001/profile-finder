@@ -1,0 +1,9 @@
+extends layouts/main
+
+block content
+    .form-container
+        form(action=routes.editRecruit(recruit.id), method="post")
+            input(type="text", placeholder="제목", name="title", value=recruit.title)
+            textarea(name="description", placeholder="설명")=recruit.description
+            input(type="submit", value="모집글 수정")
+        a.form-container__link.form-container__link--delete(href=routes.deleteRecruit(recruit.id)) 모집글 삭제

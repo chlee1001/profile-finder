@@ -1,0 +1,6 @@
+mixin recruitBlock(recruit = {})
+    .recruitBlock
+        a(href=routes.recruitDetail(recruit.id))
+            h4.recruitBlock__title=recruit.title
+            h6.recruitBlock__views=recruit.views 
+                
