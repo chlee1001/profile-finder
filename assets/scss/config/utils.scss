@@ -1,0 +1,13 @@
+.avatar-container {
+  height: 80px;
+  width: 80px;
+  background-color: $dark-grey;
+  border-radius: 50%;
+}
+.u-avatar {
+  height: 80px;
+  width: 80px;
+  background-color: $dark-grey;
+  border-radius: 50%;
+  object-fit: cover;
+}

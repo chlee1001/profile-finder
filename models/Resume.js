@@ -1,21 +1,14 @@
 import mongoose from "mongoose";
 
 const ResumeSchema = new mongoose.Schema({
-  imgUrl1: {
+  imgUrlOne: String,
+  imgUrlTwo: String,
+  imgUrlThree: String,
+  gender: String,
+  birth: Number,
+  name: {
     type: String,
-    required: "Image 1 URL is required",
-  },
-  imgUrl2: {
-    type: String,
-    required: "Image 2 URL is required",
-  },
-  imgUrl3: {
-    type: String,
-    required: "Image 3 URL is required",
-  },
-  title: {
-    type: String,
-    required: "Title is required",
+    required: "Name is required",
   },
   description: String,
   createdAt: {
@@ -26,11 +19,26 @@ const ResumeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  keywords: [
-    {
-      type: String,
-    },
-  ],
+  keywordA: {
+    type: Number,
+    default: 0,
+  },
+  keywordB: {
+    type: Number,
+    default: 0,
+  },
+  keywordC: {
+    type: Number,
+    default: 0,
+  },
+  keywordD: {
+    type: Number,
+    default: 0,
+  },
+  keywordE: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const model = mongoose.model("Resume", ResumeSchema);

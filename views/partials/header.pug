@@ -6,7 +6,7 @@ header.header
         .header__column
             form(action=routes.search, method="get")
                 input(type="text", placeholder="검색", name="term")
-                input(type="submit",value="🔍")
+                input(type="submit",value="🔍")     
         .header__column
             ul
                 if !loggedUser

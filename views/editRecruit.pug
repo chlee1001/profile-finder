@@ -4,6 +4,17 @@ block content
     .form-container
         form(action=routes.editRecruit(recruit.id), method="post")
             input(type="text", placeholder="제목", name="title", value=recruit.title)
+            if recruit.gender == "Male"
+                input(type="radio", id="Male", name="userGender", value="Male" checked)
+                label(for="Male")|남자
+                input(type="radio", id="Female", name="userGender", value="Female")
+                label(for="Female")|여자
+            else
+                input(type="radio", id="Male", name="userGender", value="Male")
+                label(for="Male")|남자
+                input(type="radio", id="Female", name="userGender", value="Female" checked)
+                label(for="Female")|여자
+            input(type="text", placeholder="배역", name="part", required=true)
             textarea(name="description", placeholder="설명")=recruit.description
             input(type="submit", value="모집글 수정")
         a.form-container__link.form-container__link--delete(href=routes.deleteRecruit(recruit.id)) 모집글 삭제

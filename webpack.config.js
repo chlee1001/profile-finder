@@ -46,6 +46,7 @@ const config = {
     filename: "[name].js",
   },
   plugins: [new ExtractCSS("styles.css")],
+  devtool: 'cheap-module-source-map'
 };
 
 module.exports = config;

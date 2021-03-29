@@ -5,6 +5,8 @@ const RecruitSchema = new mongoose.Schema({
     type: String,
     required: "Title is required",
   },
+  gender: String,
+  part: String,
   description: String,
   views: {
     type: Number,
@@ -15,6 +17,10 @@ const RecruitSchema = new mongoose.Schema({
     ref: "User",
   },
   createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  deadline: {
     type: Date,
     default: Date.now,
   },

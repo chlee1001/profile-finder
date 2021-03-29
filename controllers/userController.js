@@ -122,6 +122,7 @@ export const getMe = async (req, res) => {
     .populate("resumes")
     .populate("recruitList")
     .populate("applyList");
+  console.log(user);
   res.render("userDetail", { pageTitle: "User Detail", user });
 };
 
@@ -155,7 +156,7 @@ export const postEditProfile = async (req, res) => {
     await User.findByIdAndUpdate(req.user.id, {
       name,
       email,
-      avatarUrl: file ? file.path : req.user.avatarUrl,
+      avatarUrl: file ? file.location : req.user.avatarUrl,
     });
     res.redirect(routes.me);
   } catch (error) {

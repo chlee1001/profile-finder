@@ -25,7 +25,7 @@ export const search = async (req, res) => {
     recruits = await Recruit.find({
       title: { $regex: searchingBy, $options: "i" },
     });
-    consolg.log(recruits);
+    console.log(recruits);
   } catch (error) {
     console.log(error);
   }
@@ -39,16 +39,20 @@ export const getUploadRecruit = (req, res) =>
 
 export const postUploadRecruit = async (req, res) => {
   const {
-    body: { title, description },
+    body: { title, part, deadline, description, userGender },
   } = req;
+  console.log(deadline)
   const newRecruit = await Recruit.create({
     title,
+    part,
+    deadline,
     description,
+    gender: userGender,
     creator: req.user.id,
   });
-  const user = await User.findById(req.user.id);
-  user.recruitList.push(newRecruit.id);
-  user.save();
+  console.log(newRecruit);
+  req.user.recruitList.push(newRecruit.id);
+  req.user.save();
   res.redirect(routes.recruitDetail(newRecruit.id));
 };
 
@@ -60,6 +64,9 @@ export const recruitDetail = async (req, res) => {
   } = req;
   try {
     const recruit = await Recruit.findById(id).populate("creator");
+    recruit.views += 1;
+    recruit.save();
+    console.log(recruit)
     res.render("recruitDetail", { pageTitle: recruit.title, recruit });
   } catch (error) {
     res.redirect(routes.home);
@@ -74,7 +81,7 @@ export const getEditRecruit = async (req, res) => {
   } = req;
   try {
     const recruit = await Recruit.findById(id);
-    if (recruit.creator !== req.user.id) {
+    if (String(recruit.creator) !== req.user.id) {
       throw Error();
     } else {
       res.render("editRecruit", {
@@ -90,10 +97,10 @@ export const getEditRecruit = async (req, res) => {
 export const postEditRecruit = async (req, res) => {
   const {
     params: { id },
-    body: { title, description },
+    body: { title, part, deadline, description, userGender },
   } = req;
   try {
-    await Recruit.findOneAndUpdate({ _id: id }, { title, description });
+    await Recruit.findOneAndUpdate({ _id: id }, { title, part, deadline, description, gender: userGender });
     res.redirect(routes.recruitDetail(id));
   } catch (error) {
     res.redirect(routes.home);
@@ -103,8 +110,12 @@ export const postEditRecruit = async (req, res) => {
 // Apply
 
 export const getApply = async (req, res) => {
-  const me = await User.findById(req.user).populate("resumes");
-  res.render("apply", { pageTitle: "지원하기", user: me, resumes: me.resumes });
+  const {
+    params: { id },
+  } = req;
+  const user = await User.findById(req.user.id).populate("resumes");
+  console.log(user)
+  res.render("apply", { pageTitle: "지원하기", user, id });
 };
 
 export const postApply = async (req, res) => {
@@ -116,12 +127,12 @@ export const postApply = async (req, res) => {
     const recruit = await Recruit.findById(id);
     if (!recruit.resumeList.includes(myResumes)) {
       recruit.resumeList.push(myResumes);
-      console.log(recruit.resumeList);
       recruit.save();
+      console.log(recruit);
 
       const user = await User.findById(req.user.id);
       if (!user.applyList.includes(myResumes)) {
-        user.applyList.push(myResumes.id);
+        user.applyList.push(id);
         user.save();
       }
     } else {
@@ -133,8 +144,40 @@ export const postApply = async (req, res) => {
   res.redirect(routes.recruitDetail(id));
 };
 
-export const list = (req, res) =>
-  res.render("list", { pageTitle: "지원자 보기" });
+export const list = async (req, res) => {
+  const {
+    params: { id },
+    query: { k },
+  } = req;
+  try {
+    const recruit = await Recruit.findById(id).populate('resumeList');
+    let resumeList = recruit.resumeList;
+    let keywords = []
+    if (k != undefined){
+      keywords = Array.isArray(k)? k : [k];
+      if (keywords.includes('A')){
+        resumeList = resumeList.filter(resume => resume.keywordA >= 15);
+      }
+      if (keywords.includes('B')){
+        resumeList = resumeList.filter(resume => resume.keywordB >= 15);
+      }
+      if (keywords.includes('C')){
+        resumeList = resumeList.filter(resume => resume.keywordC >= 15);
+      }
+      if (keywords.includes('D')){
+        resumeList = resumeList.filter(resume => resume.keywordD >= 15);
+      }
+      if (keywords.includes('E')){
+        resumeList = resumeList.filter(resume => resume.keywordE >= 15);
+      }
+      console.log(resumeList)
+    }
+    res.render("list", { pageTitle: "지원자 보기", recruit, resumeList, keywords });
+  } catch (error) {
+    console.log(error);
+    res.redirect(routes.recruitDetail(id));
+  }
+};
 
 // Delete Recruit
 
@@ -147,6 +190,15 @@ export const deleteRecruit = async (req, res) => {
     if (recruit.creator !== req.user.id) {
       throw Error();
     } else {
+      req.user.recruitList.splice(req.user.recruitList.indexOf(id), 1);
+      req.user.save();
+      users = await User.find({});
+      for (const user in users){
+        if (user.applyList.includes(id)) {
+          user.applyList.splice(user.applyList.indexOf(id), 1);
+          user.save();
+        }
+      }
       await Recruit.findOneAndRemove({ _id: id });
     }
   } catch (error) {
@@ -155,20 +207,3 @@ export const deleteRecruit = async (req, res) => {
   res.redirect(routes.home);
 };
 
-// Register Video View
-
-export const postRegisterView = async (req, res) => {
-  const {
-    params: { id },
-  } = req;
-  try {
-    const recruit = await Recruit.findById(id);
-    recruit.views += 1;
-    recruit.save();
-    res.status(200);
-  } catch (error) {
-    res.status(400);
-  } finally {
-    res.end();
-  }
-};

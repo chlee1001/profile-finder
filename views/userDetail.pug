@@ -4,24 +4,31 @@ include mixins/resumeBlock
 
 block content
     .user-profile
-        img.u-avatar(src=user.avatarUrl)
+        .avatar-container
+            if user.avatarUrl
+                img.u-avatar(src=user.avatarUrl)
+            else
+                img.u-avatar(src=user.avatarUrl)
         h4.profile__username=user.name
     if loggedUser && user.id === loggedUser.id
         .user-profile__btns
+            if user.resumes.length < 4
+                a(href=`/resumes${routes.uploadResume}`)
+                    button 📝 프로필 작성
             a(href=`/users${routes.editProfile}`)
-                    button ✏️ 내 정보 수정
+                button ✏️ 내 정보 수정
             a(href=`/users${routes.changePassword}`)
-                    button 🔒 비밀번호 변경
+                button 🔒 비밀번호 변경
     .userDetail__resumes
         h4.list__label 내 지원서
         -var allResumes = user.resumes.reverse();
         -var resumes = allResumes.filter(recruit => allResumes.indexOf(resumes) < 5)
         each resume in resumes
             +resumeBlock({
-                id:apply.id,
-                title:apply.title,
-                image:apply.imgUrl1,
-                creator:apply.creator,
+                id:resume.id,
+                title:resume.title,
+                image:resume.imgUrlOne,
+                creator:resume.creator,
             })
     .userDetail__recruitList
         h4.list__label 작성한 모집글 목록
@@ -39,7 +46,7 @@ block content
         -var applies = allApplies.filter(apply => allApplies.indexOf(apply) < 5)
         each apply in applies
             +recruitBlock({
-                id:recruit.id,
-                title:recruit.title,
-                views:recruit.views,
+                id:apply.id,
+                title:apply.title,
+                views:apply.views,
             })

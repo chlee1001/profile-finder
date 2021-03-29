@@ -18,7 +18,7 @@ main {
 }
 
 button,
-input:not([type="file"]),
+input:not([type="file"]):not([type="radio"]):not([type="checkbox"]),
 textarea,
 .fileUpload {
   padding: 7px 10px;

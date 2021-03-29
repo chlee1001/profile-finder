@@ -1,29 +1,46 @@
 import routes from "../routes";
-import Resume from "../models/Resume";
 import User from "../models/User";
+import Recruit from "../models/Recruit";
+import Resume from "../models/Resume";
 
 // Upload Resume
 
 export const getUploadResume = (req, res) =>
-  res.render("uploadResume", { pageTitle: "지원서 작성" });
+res.render("uploadResume", { pageTitle: "지원서 작성" });
 
 export const postUploadResume = async (req, res) => {
   const {
-    body: { title, description },
-    profileImg1: { path1 },
-    profileImg2: { path2 },
-    profileImg3: { path3 },
+    body: { 
+      name, 
+      birth, 
+      description, 
+      userGender, 
+      keywordA,
+      keywordB,
+      keywordC,
+      keywordD,
+      keywordE, 
+    },
+    files: { profileImg1, profileImg2, profileImg3 }
   } = req;
   const newResume = await Resume.create({
-    title,
+    imgUrlOne: profileImg1[0].location,
+    imgUrlTwo: profileImg2[0].location,
+    imgUrlThree: profileImg3[0].location,
+    name,
+    birth: parseInt(birth),
     description,
-    imgUrl1: path1,
-    imgUrl2: path2,
-    imgUrl3: path3,
+    gender: userGender,
+    keywordA: parseInt(keywordA),
+    keywordB: parseInt(keywordB),
+    keywordC: parseInt(keywordC),
+    keywordD: parseInt(keywordD),
+    keywordE: parseInt(keywordE),
+    creator: req.user.id,
   });
-  const user = await User.findById(req.user.id);
-  user.resumes.push(newResume.id);
-  user.save();
+  console.log(newResume)
+  req.user.resumes.push(newResume.id);
+  req.user.save();
   res.redirect(routes.resumeDetail(newResume.id));
 };
 
@@ -35,7 +52,8 @@ export const resumeDetail = async (req, res) => {
   } = req;
   try {
     const resume = await Resume.findById(id);
-    res.render("resumeDetail", { pageTitle: "지원서 상세보기", resume });
+    console.log(resume)
+    res.render("resumeDetail", { pageTitle: `${resume.name}`, resume });
   } catch (error) {
     res.redirect(routes.home);
   }
@@ -49,7 +67,7 @@ export const getEditResume = async (req, res) => {
   } = req;
   try {
     const resume = await Resume.findById(id);
-    res.render("editResume", { pageTitle: `${resume.title} 편집`, resume });
+    res.render("editResume", { pageTitle: `${resume.name} 편집`, resume });
   } catch (error) {
     res.redirect(routes.home);
   }
@@ -57,22 +75,11 @@ export const getEditResume = async (req, res) => {
 
 export const postEditResume = async (req, res) => {
   const {
-    body: { title, description },
-    profileImg1: { path1 },
-    profileImg2: { path2 },
-    profileImg3: { path3 },
+    params: { id },
+    body: { name, birth, description },
   } = req;
   try {
-    await Resume.findOneAndUpdate(
-      { _id: id },
-      {
-        title,
-        description,
-        imgUrl1: path1,
-        imgUrl2: path2,
-        imgUrl3: path3,
-      }
-    );
+    await Resume.findOneAndUpdate({ _id: id }, { name, birth: parseInt(birth), description });
     res.redirect(routes.resumeDetail(id));
   } catch (error) {
     res.redirect(routes.home);
@@ -84,7 +91,21 @@ export const deleteResume = async (req, res) => {
     params: { id },
   } = req;
   try {
-    await Resume.findOneAndRemove({ _id: id });
+    resume = await Resume.findById(id);
+    if(resume.creator !== req.user.id) {
+      throw Error();
+    } else {
+      req.user.resumes.splice(req.user.resumes.indexOf(id), 1);
+      req.user.save();
+      recruits = await Recruit.find({});
+      for(const recruit in recruits) {
+        if (recruit.resumeList.includes(id)) {
+          recruit.resumeList.splice(recruit.resumeList.indexOf(id), 1);
+          recruit.save();
+        }
+      }
+      await Resume.findOneAndRemove({ _id: id });
+    }
   } catch (error) {}
   res.redirect(routes.home);
 };
