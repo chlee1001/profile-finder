@@ -6,11 +6,14 @@ block content
         .apply__header 
             h3|지원할 프로필 선택
         .apply__form
-            form(action=routes.apply(id) method="post")
+            form(action=routes.apply(recruit.id) method="post")
                 .resumes
                     each resume in user.resumes
                         .resume
-                            input(type="radio", name="myResumes", value=resume.id)
+                            if recruit.gender == resume.gender
+                                input(type="radio", name="myResumes", value=resume.id)
+                            else 
+                                input(type="radio", name="myResumes", value=resume.id, disabled)
                             +resumeBlock({
                                 id:resume.id,
                                 name:resume.name,

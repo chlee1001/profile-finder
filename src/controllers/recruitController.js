@@ -119,9 +119,16 @@ export const getApply = async (req, res) => {
   const {
     params: { id },
   } = req;
-  const user = await User.findById(req.user.id).populate("resumes");
-  console.log(user)
-  res.render("apply", { pageTitle: "지원하기", user, id });
+
+  try{
+    const user = await User.findById(req.user.id).populate("resumes");
+    const recruit = await Recruit.findById(id);
+    res.render("apply", { pageTitle: "지원하기", user, recruit });
+  } catch (error) {
+    req.flash('error', '모집글을 찾을 수 없습니다');
+    res.redirect(routes.recruitDetail(id));
+  }
+   
 };
 
 export const postApply = async (req, res) => {
@@ -131,23 +138,18 @@ export const postApply = async (req, res) => {
   } = req;
   try {
     const recruit = await Recruit.findById(id);
-    const resume = await Recruit.findById(myResumes);
-    if (recruit.gender == resume.gender){
-      if (!recruit.resumeList.includes(myResumes)) {
-        recruit.resumeList.push(myResumes);
-        recruit.save();
-        console.log(recruit);
-
-        const user = await User.findById(req.user.id);
-        if (!user.applyList.includes(myResumes)) {
-          user.applyList.push(id);
-          user.save();
-        }
-      } else {
-        req.flash('error', '이미 지원한 모집글입니다');
+    if (!recruit.resumeList.includes(myResumes)) {
+      recruit.resumeList.push(myResumes);
+      recruit.save();
+      console.log(recruit);
+      const user = await User.findById(req.user.id);
+      if (!user.applyList.includes(myResumes)) {
+        user.applyList.push(id);
+        user.save();
       }
+      req.flash('success', '지원을 완료했습니다');
     } else {
-      req.flash('error', '지원할 수 없는 성별입니다');
+      req.flash('error', '이미 지원한 모집글입니다');
     }
   } catch (error) {
     req.flash('error', '모집글을 찾을 수 없습니다');
