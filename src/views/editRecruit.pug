@@ -1,0 +1,32 @@
+extends layouts/main
+
+block content
+    .editRecruit
+        .form-container
+            form(action=routes.editRecruit(recruit.id), method="post")
+                input(type="text", placeholder="제목", name="title", value=recruit.title).editRecruit__title.title
+                .form__content
+                    h2|성별
+                    .radio
+                        if recruit.gender == "Male"
+                            .gender
+                                input(type="radio", id="Male", name="userGender", value="Male" checked)
+                                h4|남자
+                                input(type="radio", id="Female", name="userGender", value="Female")
+                                h4|여자
+                        else
+                            .gender
+                                input(type="radio", id="Male", name="userGender", value="Male")
+                                h4|남자
+                                input(type="radio", id="Female", name="userGender", value="Female" checked)
+                                h4|여자
+                .form__content
+                    h2|배역
+                    input(type="text", placeholder="배역", name="part", value=recruit.part, required=true)
+                .textarea
+                    h2|설명
+                    textarea(name="description", placeholder="설명")=recruit.description.replaceAll('<br>', '\r\n')
+                .submit
+                    input(type="submit", value="모집글 수정").submitBtn
+                    a(href=routes.deleteRecruit(recruit.id))
+                        input(type="button", value="모집글 삭제").deleteBtn

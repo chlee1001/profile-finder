@@ -1,0 +1,21 @@
+extends layouts/main
+
+block content
+    .recruit__info
+        h5.recruit__title=recruit.title
+            if loggedUser && recruit.creator.id === loggedUser.id
+                a(href=routes.editRecruit(recruit.id)) 수정
+        h5.recruit__subtitle
+            a(href=routes.userDetail(recruit.creator.id))
+                span=recruit.creator.name
+            span.recruit__views 조회수: #{recruit.views}회
+        .description
+            pre.recruit__description=recruit.description
+        
+        if loggedUser
+            .recruit__buttons
+                a(href=routes.apply(recruit.id))
+                    button|지원하기
+                if recruit.creator.id === loggedUser.id
+                    a(href=routes.list(recruit.id))
+                        button|지원자 보기

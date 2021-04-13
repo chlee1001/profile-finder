@@ -1,0 +1,118 @@
+ul.userDetail{
+    border-top: 0.063em solid rgba(0, 0, 0, 0.2);
+    padding-top: 1.250em;
+}
+.user-profile{
+    width: 100%;
+    max-width: 59.375em;
+    height: 70em;
+    .profile__container{
+        background-color: white;
+        width: 100%;
+        justify-self: end;
+        display: flex;
+        flex-direction: column;
+        padding: 1.250em;
+        border-radius: 0.313em;
+        display: flex;
+        flex-direction: column;
+        .avatar-container{
+            margin: auto;
+        }
+        h4{
+            margin: 1.250em 0em;
+            width: 100%;
+            text-align: center;
+            font-size: 1.563em;
+        }
+
+    }
+    .userDetail__resumes{
+        margin-top: 1.250em;
+        background-color: white;
+        width: 100%;
+        justify-self: end;
+        display: flex;
+        flex-direction: column;
+        padding: 3.613em;
+        border-radius: 0.313em;
+        h4.list__label{
+            border-bottom: 0.063em solid rgba(0, 0, 0, 0.2);
+            font-size: 1.250em;
+            padding-bottom: 1.250em;
+            margin-bottom: 1.250em;
+        }
+        .resumes{
+            display: flex;
+            flex-direction: row;
+            .resume{
+                display: flex;
+                flex-direction: column;
+                margin: 0.313em 1.875em;
+                h5{
+                    width: 100%;
+                    text-align: center;
+                    margin-top: 0.625em;
+                }
+            }
+        }
+    }
+    .userDetail__recruitList{
+        margin-top: 1.250em;
+        background-color: white;
+        width: 100%;
+        justify-self: end;
+        display: flex;
+        flex-direction: column;
+        padding: 3.613em;
+        border-radius: 0.313em;
+        h4.list__label{
+            border-bottom: 0.063em solid rgba(0, 0, 0, 0.2);
+            font-size: 1.250em;
+            padding-bottom: 1.250em;
+            margin-bottom: 0.625em;
+        }
+        h5{
+            padding: 0.625em;
+            font-size: 0.938em;
+            color: #888888;
+            white-space:nowrap;
+            text-overflow: ellipsis;
+            overflow:hidden;
+            span.title{
+                color: black; 
+                font-size: 1.063em; 
+                font-weight: 600;
+            }
+        }
+    }
+    .userDetail__applyList{
+        margin-top: 1.250em;
+        background-color: white;
+        width: 100%;
+        justify-self: end;
+        display: flex;
+        flex-direction: column;
+        padding: 3.613em;
+        border-radius: 0.313em;
+        h4.list__label{
+            border-bottom: 0.063em solid rgba(0, 0, 0, 0.2);
+            font-size: 1.250em;
+            padding-bottom: 1.250em;
+            margin-bottom: 0.625em;
+        }
+        h5{
+            padding: 0.625em;
+            font-size: 0.938em;
+            color: #888888;
+            white-space:nowrap;
+            text-overflow: ellipsis;
+            overflow:hidden;
+            span.title{
+                color: black; 
+                font-size: 1.063em; 
+                font-weight: 600;
+            }
+        }
+    }
+}

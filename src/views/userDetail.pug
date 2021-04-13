@@ -1,0 +1,52 @@
+extends layouts/main
+include mixins/recruitBlock
+include mixins/resumeBlock
+
+block content
+    .user-profile
+        .profile__container
+            .avatar-container
+                if user.avatarUrl
+                    img.u-avatar(src=user.avatarUrl)
+                else
+                    img.u-avatar(src=user.avatarUrl)
+            h4.profile__username=user.name
+        .userDetail__resumes
+            h4.list__label 내 지원서
+            -var allResumes = user.resumes.reverse();
+            -var resumes = allResumes.filter(resumes => allResumes.indexOf(resumes) < 6)
+            .resumes
+                each resume in resumes
+                    .resume
+                        a(href=routes.resumeDetail(resume.id))
+                            .avatar-container
+                                img.u-avatar(src=resume.imgUrlOne)
+                            h5=resume.name
+        .userDetail__recruitList
+            h4.list__label 최근 작성한 모집글
+            -var allRecruits = user.recruitList.reverse();
+            -var recruits = allRecruits.filter(recruit => allRecruits.indexOf(recruit) < 3)
+            each recruit in recruits
+                a(href=routes.recruitDetail(recruit.id))
+                    h5
+                        span.title=recruit.title
+                        span  | 
+                        span=recruit.gender == Female ? '여자' : '남자'
+                        span  | 
+                        span=recruit.part
+                        span  | 
+                        span=recruit.description
+        .userDetail__applyList
+            h4.list__label 최근 지원한 모집글
+            -var allApplies = user.applyList.reverse();
+            -var applies = allApplies.filter(apply => allApplies.indexOf(apply) < 3)
+            each apply in applies
+                a(href=routes.recruitDetail(apply.id))
+                    h5
+                        span.title=apply.title
+                        span  | 
+                        span=apply.gender == Female ? '여자' : '남자'
+                        span  | 
+                        span=apply.part
+                        span  | 
+                        span=apply.description

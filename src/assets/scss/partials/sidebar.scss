@@ -1,0 +1,27 @@
+.side-bar {
+    padding: 1.875em;
+    display: flex;
+    flex-direction: column;
+    justify-self: start;
+    width: 15.625em;
+    height: 70em;
+    background-color: white;
+    border-radius: 0.313em;
+    margin-right: 1.875em;
+    margin-left: 0.625em;
+    h1{
+        font-size: 1.063em;
+        font-weight: 600;
+        margin-bottom: 3.125em;
+    }
+    ul{
+        font-size: 0.938em;
+        li{
+            margin-bottom: 0.938em;
+            a:link {text-decoration: none; color: black;}
+            a:visited {text-decoration: none; color: black;}
+            a:active {text-decoration: none; color: black;}
+            a:hover {text-decoration: none; color: black;}
+        }
+    }
+}

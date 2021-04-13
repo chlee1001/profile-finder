@@ -1,0 +1,42 @@
+.form-container {
+  margin-top: 3.125em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  form {
+    width: 100%;
+    max-width: 20.000em;
+    margin-bottom: 3.125em;
+    input:not([type="file"]):not([type="radio"]):not([type="checkbox"]),
+    .fileUpload {
+      display: block;
+      width: 100%;
+      padding-top: 0.625em;
+      padding-bottom: 0.625em;
+      box-shadow: 0 0.063em 0.188em rgba(0, 0, 0, 0.12), 0 0.063em 0.125em rgba(0, 0, 0, 0.24);
+      &:not(:last-child) {
+        margin-bottom: 1.563em;
+      }
+    }
+    textarea {
+      box-shadow: 0 0.063em 0.188em rgba(0, 0, 0, 0.12), 0 0.063em 0.125em rgba(0, 0, 0, 0.24);
+      margin-bottom: 1.563em;
+      line-height:  1.5em;
+    }
+    input[type="submit"] {
+      background-color: #5bacdb;
+      color: white;
+    }
+  }
+  a {
+    max-width: 20.000em;
+    width: 100%;
+  }
+  .fileUpload {
+    label {
+      font-weight: 300;
+      margin-right: 0.625em;
+    }
+  }
+}

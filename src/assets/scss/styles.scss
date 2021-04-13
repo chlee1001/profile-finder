@@ -1,0 +1,24 @@
+@import "config/_variables.scss";
+@import "config/reset.scss";
+@import "config/utils.scss";
+@import "main.scss";
+
+@import "partials/header.scss";
+@import "partials/footer.scss";
+@import "partials/form.scss";
+@import "partials/socialLogin.scss";
+@import "partials/recruitBlock.scss";
+@import "partials/resumeBlock.scss";
+@import "partials/sidebar.scss";
+
+@import "pages/home.scss";
+@import "pages/search.scss";
+@import "pages/recruitDetail.scss";
+@import "pages/userDetail.scss";
+@import "pages/uploadRecruit.scss";
+@import "pages/uploadResume.scss";
+@import "pages/resumeDetail.scss";
+@import "pages/apply.scss";
+@import "pages/list.scss";
+@import "pages/editRecruit.scss";
+

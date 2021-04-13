@@ -1,0 +1,52 @@
+.resumeBlock{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    a.thumbnail{
+        display: flex;
+        flex-direction: row;
+        img{
+            width: 8.875em;
+            height: 8.875em;
+            object-fit: contain;
+            background-color: #888888;
+            margin: 1.250em;
+            border-radius: 0.313em;
+            border: 0.063em solid black;
+        }
+        .resumeBlock__description{
+            margin: 1.250em;
+            max-height: 8.875em;
+            min-height: 8.875em;
+            text-align: left;
+            h4{
+                font-size: 1.5em;
+                font-weight: 700;
+                span{
+                    margin-left: 1.5em;
+                    font-size: 0.6em;
+                    font-weight: 300; 
+                }
+            }
+            .resume__keywords{
+                margin-top: 1.250em;
+                display: flex;
+                flex-direction: row;
+                .keyword{
+                    font-size: 0.8em;
+                    margin: 0.325em;
+                    padding: 0.5em 1em;
+                    border-radius: 1.313em;
+                    background-color: rgba(138, 43, 226, 0.5);
+                    border: 0.063em solid rgba(138, 43, 226, 1);;
+                    color: white;
+                }
+            }
+            p.createdAt{
+                font-size: 0.9em;
+                margin-top: 1.750em;
+                color: gray;
+            }
+        }
+    }
+}

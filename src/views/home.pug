@@ -1,0 +1,16 @@
+extends layouts/main
+include mixins/recruitBlock
+
+block content
+    .recruits__wrapper
+        .recruits
+            each item in recruits
+                +recruitBlock({
+                    id:item.id,
+                    title:item.title,
+                    part:item.part,
+                    gender:item.gender=='Female' ? '여' : '남',
+                    deadline:item.deadline,
+                    description:item.description,
+                    views:item.views,
+                })

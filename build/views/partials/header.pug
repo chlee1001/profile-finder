@@ -1,0 +1,15 @@
+header.header
+    .header__wrapper
+        .header__column
+            a(href=routes.home)
+                i.fas.fa-camera-retro   
+        .header__column
+            ul
+                li
+                    a(href='#') About
+                li
+                    a(href='#') Contact            
+        .header__column
+            i.fas.fa-search
+            form(action=routes.search, method="get")
+                input(type="text", placeholder="검색", name="term")

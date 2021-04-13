@@ -1,0 +1,32 @@
+extends layouts/main
+include mixins/resumeBlock
+
+block content
+    .apply__container
+        .apply__header 
+            h3|지원할 프로필 선택
+        .apply__form
+            form(action=routes.apply(id) method="post")
+                .resumes
+                    each resume in user.resumes
+                        .resume
+                            input(type="radio", name="myResumes", value=resume.id)
+                            +resumeBlock({
+                                id:resume.id,
+                                name:resume.name,
+                                keywordA:resume.keywordA,
+                                keywordB:resume.keywordB,
+                                keywordC:resume.keywordC,
+                                keywordD:resume.keywordD,
+                                keywordE:resume.keywordE,
+                                gender:resume.gender,
+                                birth:resume.birth,
+                                createdAt: resume.createdAt,
+                                image:resume.imgUrlOne,
+                                creator:resume.creator,
+                            })
+                .apply__btns
+                    .btn
+                        input(type="submit", value="지원하기")
+                    .btn
+                        button(onclick="history.back()") 취소

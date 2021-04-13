@@ -1,0 +1,29 @@
+extends layouts/main
+
+block content
+    .resume__info
+        .title
+            h2=resume.name
+            h3
+                span
+                    a(href=routes.editResume(resume.id)) 수정
+                span
+                    a(href=routes.deleteResume(resume.id)) 삭제하기
+        .images
+            img.resume__image(src=resume.imgUrlOne)
+            img.resume__image(src=resume.imgUrlTwo)
+            img.resume__image(src=resume.imgUrlThree)
+        .resume__keywords
+            if resume.keywordA > 15
+                .keyword="#귀여운"
+            if resume.keywordB > 15
+                .keyword=resume.gender == "Female" ? "#섹시한" : "#듬직한"
+            if resume.keywordC > 15
+                .keyword=resume.gender == "Female" ? "#우아한" : "#섹시한"
+            if resume.keywordD > 15
+                .keyword=resume.gender == "Female" ? "#청순한" : "#시크한"
+            if resume.keywordE > 15
+                .keyword=resume.gender == "Female" ? "#풋풋한" : "#터프한"
+        pre.resume__description=resume.description
+        .back
+            button(onclick="history.back()") 뒤로가기

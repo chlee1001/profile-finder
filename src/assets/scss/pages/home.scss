@@ -1,0 +1,14 @@
+.recruits__wrapper{
+    width: 100%;
+    height: 70em;
+    max-width: 59.375em;
+    justify-self: end;
+    display: flex;
+    .recruits{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(16.875em, 1fr));
+        grid-template-rows: repeat(3, minmax(16.875em, 1fr));
+        grid-gap: 1.875em;
+    }
+}

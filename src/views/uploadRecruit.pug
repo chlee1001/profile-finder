@@ -1,0 +1,28 @@
+extends layouts/main
+
+block content
+    .uploadRecruit
+        .form-container
+            form(action=`/recruits${routes.uploadRecruit}`, method="post")
+                input(type="text", placeholder="제목", name="title", required=true).uploadRecruit__title.title
+                .form__content
+                    h2|배역
+                    input(type="text", name="part", required=true)
+                .form__content
+                    h2|기간
+                    input(type="date", id="deadline", name="deadline", value=(new Date()), min="1900-01-01", max="3000-12-31")
+                .form__content
+                    h2|성별
+                    .radio
+                        .gender
+                            input(type="radio", id="Male", name="userGender", value="Male")
+                            h4|남자
+                        .gender
+                            input(type="radio", id="Female", name="userGender", value="Female")
+                            h4|여자
+                .textarea
+                    h2|설명
+                    textarea(name="description", placeholder="설명", warp="hard", required=true)
+                .submit
+                    input(type="submit", value="작성 완료").submitBtn
+                    input(type="button", value="취소", onclick="history.back()").cancelBtn

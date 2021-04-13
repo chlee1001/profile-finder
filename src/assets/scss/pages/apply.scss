@@ -1,0 +1,76 @@
+.apply__container{
+    width: 100%;
+    max-width: 59.375em;
+    height: 70em;
+    max-width: 59.375em;
+    justify-self: end;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .apply__header{
+        display: flex;
+        justify-self: center;
+        width: 100%;
+        height: 4.375em;
+        min-height: 4.375em;
+        background-color: white;
+        border-radius: 0.313em;
+        margin-bottom: 1.875em;
+        h3{
+            font-size: 1.250em;
+            margin: auto;
+            font-weight: 600;
+        }
+    }
+    .apply__form{
+        width: 100%;
+        .resumes{
+            min-height: 57em;
+            max-height: 57em;
+            overflow-y: scroll;
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+            width: 100%;
+            &::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Opera*/
+            }
+            .resume{
+                display: flex;
+                flex-flow: row;
+                width: 100%;
+                background-color: white;
+                margin-bottom: 1.875em;
+                border-radius: 0.313em;
+                padding: 1.075em;
+                input{
+                    margin: auto;
+                }
+            }
+        }
+        .apply__btns{
+            width: 100%;
+            background-color: white;
+            border-radius: 0.313em;
+            margin-top: 1.313em;
+            height: 4.5em;
+            padding: 0.7em;
+            display: flex;
+            flex-direction: row;
+            .btn{
+                margin: auto;
+                input{
+                    width: 10em;
+                    background-color: rgb(159, 231, 231);
+                    color: rgb(11, 102, 102);
+                    box-shadow: 0 0.063em 0.188em rgba(0, 0, 0, 0.12), 0 0.063em 0.125em rgba(0, 0, 0, 0.24);
+                }
+                button{
+                    width: 10em;
+                    background-color: white;
+                    color: black;
+                    box-shadow: 0 0.063em 0.188em rgba(0, 0, 0, 0.12), 0 0.063em 0.125em rgba(0, 0, 0, 0.24);
+                }
+            }
+        }
+    }
+}
