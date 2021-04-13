@@ -22,9 +22,10 @@ const CokieStore = MongoStore(session);
 
 app.use(helmet({contentSecurityPolicy: false,}));
 app.set("view engine", "pug");
-app.use("/uploads", express.static("uploads"));
-app.use("/tm", express.static("tm"));
-app.use("/static", express.static("static"));
+app.set("views", path.join(__dirname, "views"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/tm", express.static(path.join(__dirname, "tm")));
+app.use("/static", express.static(path.join(__dirname, "static")));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
