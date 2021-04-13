@@ -143,7 +143,7 @@ export const postApply = async (req, res) => {
       recruit.save();
       console.log(recruit);
       const user = await User.findById(req.user.id);
-      if (!user.applyList.includes(myResumes)) {
+      if (!user.applyList.includes(id)) {
         user.applyList.push(id);
         user.save();
       }
