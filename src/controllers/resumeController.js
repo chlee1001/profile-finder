@@ -41,6 +41,7 @@ export const postUploadResume = async (req, res) => {
   console.log(newResume)
   req.user.resumes.push(newResume.id);
   req.user.save();
+  req.flash('success', '프로필을 업로드했습니다');
   res.redirect(routes.resumeDetail(newResume.id));
 };
 
@@ -55,6 +56,7 @@ export const resumeDetail = async (req, res) => {
     console.log(resume)
     res.render("resumeDetail", { pageTitle: `${resume.name}`, resume });
   } catch (error) {
+    req.flash('error', '프로필을 찾을 수 없습니다');
     res.redirect(routes.home);
   }
 };
@@ -69,6 +71,7 @@ export const getEditResume = async (req, res) => {
     const resume = await Resume.findById(id);
     res.render("editResume", { pageTitle: `${resume.name} 편집`, resume });
   } catch (error) {
+    req.flash('error', '프로필을 찾을 수 없습니다');
     res.redirect(routes.home);
   }
 };
@@ -80,8 +83,10 @@ export const postEditResume = async (req, res) => {
   } = req;
   try {
     await Resume.findOneAndUpdate({ _id: id }, { name, birth: parseInt(birth), description });
+    req.flash('success', '프로필을 업데이트 했습니다');
     res.redirect(routes.resumeDetail(id));
   } catch (error) {
+    req.flash('error', '프로필을 찾을 수 없습니다');
     res.redirect(routes.home);
   }
 };
@@ -93,6 +98,7 @@ export const deleteResume = async (req, res) => {
   try {
     const resume = await Resume.findById(id).populate('creator');
     if(resume.creator.id !== req.user.id) {
+      req.flash('error', '프로필 작성자가 아닙니다');
       throw Error();
     } else {
       req.user.resumes.splice(req.user.resumes.indexOf(id), 1);
@@ -105,8 +111,10 @@ export const deleteResume = async (req, res) => {
         }
       }
       await Resume.findOneAndRemove({ _id: id });
+      req.flash('success', '프로필을 삭제했습니다');
     }
   } catch (error) {
+    req.flash('error', '프로필을 찾을 수 없습니다');
     console.log(error)
   }
   res.redirect(routes.home);

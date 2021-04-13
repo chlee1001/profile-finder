@@ -18,7 +18,9 @@ passport.use(
     {
       clientID: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
-      callbackURL: `http://localhost:4000${routes.githubCallback}`,
+      callbackURL: process.env.PRODUCTION
+        ? `https://profile-finder0.herokuapp.com${routes.githubCallback}`
+        : `http://localhost:4000${routes.githubCallback}`,
     },
     githubLoginCallback
   )
@@ -29,7 +31,9 @@ passport.use(
     {
       clientID: process.env.NAVER_ID,
       clientSecret: process.env.NAVER_SECRET,
-      callbackURL: `http://localhost:4000${routes.naverCallback}`,
+      callbackURL: process.env.PRODUCTION
+        ? `https://profile-finder0.herokuapp.com${routes.naverCallback}`
+        : `http://localhost:4000${routes.naverCallback}`,
     },
     naverLoginCallback
   )

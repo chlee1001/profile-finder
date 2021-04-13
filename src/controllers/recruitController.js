@@ -53,6 +53,7 @@ export const postUploadRecruit = async (req, res) => {
   console.log(newRecruit);
   req.user.recruitList.push(newRecruit.id);
   req.user.save();
+  req.flash('success', '모집글을 업로드했습니다');
   res.redirect(routes.recruitDetail(newRecruit.id));
 };
 
@@ -69,6 +70,7 @@ export const recruitDetail = async (req, res) => {
     console.log(recruit)
     res.render("recruitDetail", { pageTitle: recruit.title, recruit });
   } catch (error) {
+    req.flash('error', '모집글을 찾을 수 없습니다');
     res.redirect(routes.home);
   }
 };
@@ -82,6 +84,7 @@ export const getEditRecruit = async (req, res) => {
   try {
     const recruit = await Recruit.findById(id);
     if (String(recruit.creator) !== req.user.id) {
+      req.flash('error', '모집글을 수정할 수 없습니다');
       throw Error();
     } else {
       res.render("editRecruit", {
@@ -90,6 +93,7 @@ export const getEditRecruit = async (req, res) => {
       });
     }
   } catch (error) {
+    req.flash('error', '모집글을 찾을 수 없습니다');
     res.redirect(routes.home);
   }
 };
@@ -101,8 +105,10 @@ export const postEditRecruit = async (req, res) => {
   } = req;
   try {
     await Recruit.findOneAndUpdate({ _id: id }, { title, part, deadline, description, gender: userGender });
+    req.flash('success', '모집글을 수정했습니다');
     res.redirect(routes.recruitDetail(id));
   } catch (error) {
+    req.flash('error', '모집글을 수정할 수 없습니다');
     res.redirect(routes.home);
   }
 };
@@ -125,20 +131,26 @@ export const postApply = async (req, res) => {
   } = req;
   try {
     const recruit = await Recruit.findById(id);
-    if (!recruit.resumeList.includes(myResumes)) {
-      recruit.resumeList.push(myResumes);
-      recruit.save();
-      console.log(recruit);
+    const resume = await Recruit.findById(myResumes);
+    if (recruit.gender == resume.gender){
+      if (!recruit.resumeList.includes(myResumes)) {
+        recruit.resumeList.push(myResumes);
+        recruit.save();
+        console.log(recruit);
 
-      const user = await User.findById(req.user.id);
-      if (!user.applyList.includes(myResumes)) {
-        user.applyList.push(id);
-        user.save();
+        const user = await User.findById(req.user.id);
+        if (!user.applyList.includes(myResumes)) {
+          user.applyList.push(id);
+          user.save();
+        }
+      } else {
+        req.flash('error', '이미 지원한 모집글입니다');
       }
     } else {
-      console.log("이미 지원한 모집글입니다.");
+      req.flash('error', '지원할 수 없는 성별입니다');
     }
   } catch (error) {
+    req.flash('error', '모집글을 찾을 수 없습니다');
     console.log(error);
   }
   res.redirect(routes.recruitDetail(id));
@@ -174,6 +186,7 @@ export const list = async (req, res) => {
     }
     res.render("list", { pageTitle: "지원자 보기", recruit, resumeList, keywords });
   } catch (error) {
+    req.flash('error', '모집글을 찾을 수 없습니다');
     console.log(error);
     res.redirect(routes.recruitDetail(id));
   }
@@ -188,6 +201,7 @@ export const deleteRecruit = async (req, res) => {
   try {
     const recruit = await Recruit.findById(id).populate('creator');
     if (recruit.creator.id !== req.user.id) {
+      req.flash('error', '모집글 작성자가 아닙니다');
       throw Error();
     } else {
       req.user.recruitList.splice(req.user.recruitList.indexOf(id), 1);
@@ -201,8 +215,10 @@ export const deleteRecruit = async (req, res) => {
         }
       }
       await Recruit.findOneAndRemove({ _id: id });
+      req.flash('success', '모집글을 삭제했습니다');
     }
   } catch (error) {
+    req.flash('error', '모집글을 찾을 수 없습니다');
     console.log(error);
   }
   res.redirect(routes.home);

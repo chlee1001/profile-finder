@@ -1,0 +1,41 @@
+@keyframes flashAnimation{
+    0%{
+        transform: translateY(30em);
+    }
+    5%{
+        transform: translateY(0em);
+    }
+    90%{
+        transform: translateY(0em);
+    }
+    100%{
+        transform: translateY(30em);
+    }
+}
+
+.flash-message__container{
+    position: fixed;
+    bottom: 5%;
+    left: 5%;
+    z-index: 9;
+    padding: 1.250em;
+    border-radius: 1.563em;
+    width: 20em;
+    text-align: center;
+    box-shadow: 0 0.63em 1.88em rgba(0, 0, 0, 0.12), 0 0.063em 0.125em rgba(0, 0, 0, 0.24);
+    animation: flashAnimation 3s ease-in-out forwards;
+    &.error{
+        background-color: rgba(119, 14, 14, 0.7);
+    }
+    &.success{
+        background-color: rgba(25, 100, 11, 0.7);
+    }
+    &.info{
+        background-color: rgba(102, 93, 9, 0.7);
+    }
+    .flash-message__text{
+        color: white;
+        font-weight: 300;
+        font-size: 0.875em;
+    }
+}
