@@ -13,11 +13,11 @@ Profile-finder is an actor employment service that provides direct connection be
 ## Build
 - build in Window
 ```
-npm run build
+npm run buildWindow
 ```
 - build in Linux/MacOS
 ```
-npm run buildWindow
+npm run build
 ```
 - npm scripts
 ```
