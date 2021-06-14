@@ -3,12 +3,20 @@
 [Gachon University](https://www.gachon.ac.kr/main.jsp) Graduation Work 3 - 2021   
 [Go to wiki page](https://github.com/rheeeuro/profile-finder/wiki)
 
+
 <a href="https://profile-finder0.herokuapp.com/">
 <img src="https://user-images.githubusercontent.com/47638660/115105818-35b98f80-9f9c-11eb-9a2a-68f629c54549.png" width="700px">    
-</a>
+</a>   
+
+
+https://profile-finder0.herokuapp.com/
 
 
 Profile-finder is an actor employment service that provides direct connection between the video producer and the actor using [deep learning](https://en.wikipedia.org/wiki/Deep_learning) profile photo analysis. Users can easily filtering profiles using keywords. Our core system is Deep learning keyword filtering using [Google Teachablemachine](https://teachablemachine.withgoogle.com/). This will reduce the time it takes for many video producers to review and filter profiles.
+
+## Presentation
+
+[<img src="https://user-images.githubusercontent.com/47638660/121841882-36f80600-cd1a-11eb-8f3b-9e997481b50b.png" width="50%">](https://youtu.be/rwmUBARqEDY)
 
 ## Build
 - build in Window
